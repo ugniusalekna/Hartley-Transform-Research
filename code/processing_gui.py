@@ -192,13 +192,6 @@ def process_signal_options(sample_rate, signal_data, wav_info):
         modified_signal = modify_amplitude(sample_rate, signal_data, processing_method,
                                            cutoff_lower, cutoff_upper, threshold, freq_to_add,
                                            amplitude_to_add, freq_to_scale, scale_factor, shift)
-        # Apply window to reduce spectral leakage
-        # windowed_signal = apply_window(sample_rate, signal_data, num_channels=wav_info[1], window_function='hanning')
-        # Do windowed signal's frequency processing (for displaying) 
-        # modified_windowed_signal = modify_amplitude(sample_rate, windowed_signal, processing_method,
-        #                                             cutoff_lower, cutoff_upper, threshold, freq_to_add,
-        #                                             amplitude_to_add, freq_to_scale, scale_factor, shift)
-
         # Truncate half of the amplitude (for displaying)
         truncated_amplitude_modified = split_hartley_transform(apply_dht(modified_signal))
         # Write and play temp files (for playing)

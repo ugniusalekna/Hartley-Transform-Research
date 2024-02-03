@@ -71,7 +71,6 @@ def band_reject_filter(sample_rate, signal_data, cutoff_lower, cutoff_upper):
     signal_fht = apply_dht(signal_data)
     truncated_amplitude, ratios = split_hartley_transform(signal_fht.reshape(-1))
     truncated_amplitude = truncated_amplitude.reshape(-1, 1)
-    # truncated_amplitude = truncate_amplitude(signal_data)
     freq_axis = get_freq_axis(sample_rate, truncated_amplitude)
     filtered_amplitude = np.copy(truncated_amplitude)
     # Apply band-reject filter
@@ -93,8 +92,6 @@ def band_reject_filter(sample_rate, signal_data, cutoff_lower, cutoff_upper):
 
 def threshold_filter(sample_rate, signal_data, threshold):
  
-    # amplitude, phase = apply_fft(signal_data)
-    # truncated_amplitude = truncate_amplitude(signal_data)
     signal_fht = apply_dht(signal_data)
     truncated_amplitude, ratios = split_hartley_transform(signal_fht.reshape(-1))
     truncated_amplitude = truncated_amplitude.reshape(-1, 1)
@@ -105,8 +102,6 @@ def threshold_filter(sample_rate, signal_data, threshold):
         mask = (truncated_amplitude[:, i] <= threshold)
         filtered_amplitude[mask, i] = 0
 
-    # reconstructed_amplitude = reconstruct_amplitude(filtered_amplitude, amplitude.shape[0])
-    # reconstructed_signal = inverse_fft(reconstructed_amplitude, phase)
     filtered_amplitude = filtered_amplitude.reshape(-1)
     reconstructed_fht = reconstruct_hartley_spectrum(filtered_amplitude, ratios)
     reconstructed_signal = inverse_dht(reconstructed_fht)
@@ -116,8 +111,6 @@ def threshold_filter(sample_rate, signal_data, threshold):
 
 def add_frequency(sample_rate, signal_data, freq_to_add, amplitude_to_add):
 
-    # amplitude, phase = apply_fft(signal_data)
-    # truncated_amplitude = truncate_amplitude(signal_data)
     signal_fht = apply_dht(signal_data)
     truncated_amplitude, ratios = split_hartley_transform(signal_fht.reshape(-1))
     truncated_amplitude = truncated_amplitude.reshape(-1, 1)
@@ -126,8 +119,6 @@ def add_frequency(sample_rate, signal_data, freq_to_add, amplitude_to_add):
     # Add frequency
     idx = np.where((freq_axis > freq_to_add - 1) & (freq_axis < freq_to_add + 1))[0]
     added_amplitude[idx, :] += amplitude_to_add
-    # reconstructed_amplitude = reconstruct_amplitude(added_amplitude, amplitude.shape[0])
-    # reconstructed_signal = inverse_fft(reconstructed_amplitude, phase)
     added_amplitude = added_amplitude.reshape(-1)
     reconstructed_fht = reconstruct_hartley_spectrum(added_amplitude, ratios)
     reconstructed_signal = inverse_dht(reconstructed_fht)
@@ -138,8 +129,6 @@ def add_frequency(sample_rate, signal_data, freq_to_add, amplitude_to_add):
 
 def scale_amplitude(sample_rate, signal_data, freq_to_scale, scale_factor):
     
-    # amplitude, phase = apply_fft(signal_data)
-    # truncated_amplitude = truncate_amplitude(signal_data)
     signal_fht = apply_dht(signal_data)
     truncated_amplitude, ratios = split_hartley_transform(signal_fht.reshape(-1))
     truncated_amplitude = truncated_amplitude.reshape(-1, 1)
@@ -148,8 +137,6 @@ def scale_amplitude(sample_rate, signal_data, freq_to_scale, scale_factor):
     # Scale frequency
     idx = np.where((freq_axis > freq_to_scale - 1) & (freq_axis < freq_to_scale + 1))[0]
     scaled_amplitude[idx, :] *= scale_factor
-    # reconstructed_amplitude = reconstruct_amplitude(scaled_amplitude, amplitude.shape[0])
-    # reconstructed_signal = inverse_fft(reconstructed_amplitude, phase)
     scaled_amplitude = scaled_amplitude.reshape(-1)
     reconstructed_fht = reconstruct_hartley_spectrum(scaled_amplitude, ratios)
     reconstructed_signal = inverse_dht(reconstructed_fht)
@@ -159,8 +146,6 @@ def scale_amplitude(sample_rate, signal_data, freq_to_scale, scale_factor):
 
 def shift_frequencies(sample_rate, signal_data, shift):
     
-    # amplitude, phase = apply_fft(signal_data)
-    # truncated_amplitude = truncate_amplitude(signal_data)
     signal_fht = apply_dht(signal_data)
     truncated_amplitude, ratios = split_hartley_transform(signal_fht.reshape(-1))
     truncated_amplitude = truncated_amplitude.reshape(-1, 1)
@@ -169,8 +154,6 @@ def shift_frequencies(sample_rate, signal_data, shift):
     # Shift the frequency spectrum excluding DC component
     shifted_amplitude = np.concatenate([[truncated_amplitude[0, :]], np.roll(truncated_amplitude[1:, :], shift_samples)])
 
-    # reconstructed_amplitude = reconstruct_amplitude(shifted_amplitude, amplitude.shape[0])
-    # reconstructed_signal = inverse_fft(reconstructed_amplitude, phase)
     shifted_amplitude = shifted_amplitude.reshape(-1)
     reconstructed_fht = reconstruct_hartley_spectrum(shifted_amplitude, ratios)
     reconstructed_signal = inverse_dht(reconstructed_fht)

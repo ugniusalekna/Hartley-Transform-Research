@@ -83,7 +83,7 @@ def plot_hartley_spectrum(sample_rate, signal_data, transform_type='discrete'):
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 9))
 
-    ax1.plot(t, signal_data, color='blue', linewidth=1)
+    ax1.plot(t, signal_data, color='blue', linewidth=0.7)
     ax2.plot(f, signal_dht, color='#FF4500', linewidth=0.7)
     ax2.scatter(f, signal_dht, color='#FF4500', s=10) 
     ax2.vlines(f, [0], signal_dht, color='#FF4500', linewidth=0.5) 
@@ -113,7 +113,7 @@ def animate_hartley_spectrum(sample_rate, signal_data):
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 9))
 
-    line1, = ax1.plot(t, signal_data, color='blue', linewidth=1)
+    line1, = ax1.plot(t, signal_data, color='blue', linewidth=0.7)
     line2, = ax2.plot(f, signal_dht, color='#FF4500', linewidth=0.7)
     scatter = ax2.scatter(f, signal_dht, color='#FF4500', s=10) 
     vlines = [Line2D([fx, fx], [0, fy], color='#FF4500', linewidth=0.5) for fx, fy in zip(f, signal_dht)]

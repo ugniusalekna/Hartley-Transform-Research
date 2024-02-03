@@ -11,7 +11,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 def get_freq_axis(sample_rate, signal_amplitude):
-    # Calculate the linspace of frequency values
     return np.linspace(0, sample_rate/2, signal_amplitude.shape[0])
 
 
@@ -75,19 +74,16 @@ def custom_division(numerator, denominator):
 def split_hartley_transform(dht):
 
     non_zero_freq_dht = dht[1:]
-    print(non_zero_freq_dht)
+    
     if len(non_zero_freq_dht) % 2 == 0:
-        
         mid = len(non_zero_freq_dht) // 2
         left_half = non_zero_freq_dht[:mid]
         right_half = non_zero_freq_dht[mid:]
-        print(left_half, right_half)
     else:
         mid = len(non_zero_freq_dht) // 2
         left_half = non_zero_freq_dht[:mid]
         right_half = non_zero_freq_dht[mid + 1:]
         mid_value = non_zero_freq_dht[mid]
-        print(left_half, mid_value, right_half)
     
     right_half = np.flip(right_half)
     ratios = [custom_division(left_half[i], right_half[i]) for i in range(len(left_half))]
